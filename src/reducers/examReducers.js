@@ -8,6 +8,8 @@ const initialState = {
   examOption: 'exam1'
 }
 
+// 回傳的新的state比需視一個全新的state物件，
+// 而不是修改原本的state物件
 function onUserChange (state, action) {
   if (typeof state === 'undefined') {
     return initialState

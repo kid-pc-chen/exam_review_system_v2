@@ -25,7 +25,7 @@ class ExamReviewer extends React.Component {
   }
 
   render () {
-    const exam_list = {
+    const examList = {
       'exam1': exam1,
       'exam2': exam2,
       'exam3': exam3
@@ -35,7 +35,7 @@ class ExamReviewer extends React.Component {
       <div>
         <ExamSelector />
         <SearchBox defaultKeyword={this.state.keyword} />
-        <QuestionsList exam={exam_list[this.state.exam_option]} keyword={this.state.keyword} />
+        <QuestionsList exam={examList[this.state.exam_option]} keyword={this.state.keyword} />
       </div>
     )
   }
@@ -47,6 +47,18 @@ class ExamSelector extends React.Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
+  /*
+    1. 當使用者透過view選擇試題後，此時會產生一個action (changeExamOption)，
+      並透過store的dispatch方法，將包含CHANGE_EXAM_OPTION和
+      資料(選擇的試題，來自event.target.value)傳遞給store
+    2. Store會將當前的state與action傳遞給reducer，reducer根據我們設計的邏輯，
+      回傳新的state給store
+    3. 接著store利用reducer傳回的新的state，取代store原先的state，並call所有
+     ExamReviewer component subscribe(s)的callback function (e.g. line 21)
+    4. ExamReviewer在subscribe function的callback function中，透過store提供的方法getState
+      取得store新的state，並根據store新的state來變更component自身的state，因此觸發ExamReviewer
+      重新render
+  */
   handleChange (event) {
     store.dispatch(changeExamOption(event.target.value))
   }
