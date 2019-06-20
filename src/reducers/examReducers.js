@@ -8,7 +8,9 @@ const initialState = {
   examOption: 'exam1'
 }
 
-// 回傳的新的state比需視一個全新的state物件，
+// reducer是一個pure function，在action被分派時，
+// store會將其當前的state和action當作參數傳入reducer。
+// reducer回傳的新的state必須是一個全新的state物件，
 // 而不是修改原本的state物件
 function onUserChange (state, action) {
   if (typeof state === 'undefined') {
